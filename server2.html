@@ -3,117 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Management Dashboard</title>
+    <title>Medal Ranking Table</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             margin: 0;
-            padding: 0;
-            background: url('settings-icon.png') no-repeat center center fixed;
-            background-size: 15%;
         }
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.8); /* semi-transparent background */
-            border-radius: 8px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-        .server-card {
             background: #fff;
+            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin: 20px 0;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #ddd;
+            max-width: 800px;
+            width: 100%;
         }
-        .server-card h2 {
-            margin: 0;
-            color: #007bff;
-            font-size: 1.5em;
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
         }
-        .server-card p {
-            margin: 0;
-            color: #555;
+        .input-box {
+            margin-bottom: 20px;
         }
-        .server-card a {
-            text-decoration: none;
-            color: #fff;
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
             background-color: #007bff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
         }
-        .server-card a:hover {
+        button:hover {
             background-color: #0056b3;
         }
-        .button {
-            display: inline-block;
-            text-decoration: none;
-            color: #fff;
-            background-color: #007bff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: background-color 0.3s;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
         }
-        .button:hover {
-            background-color: #0056b3;
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .gold {
+            background-color: gold;
+        }
+        .silver {
+            background-color: silver;
+        }
+        .bronze {
+            background-color: #cd7f32;
+        }
+        .honorable {
+            background-color: lightgreen;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Server Management Dashboard</h1>
-        
-        <!-- Server 1 -->
-        <div class="server-card">
-            <div>
-                <h2>Server 1</h2>
-                <p>Status: Online</p>
-            </div>
-            <a href="/server1/manage" class="button">Manage Server</a>
+        <h2>Medal Ranking</h2>
+        <div class="input-box">
+            <label for="data">Enter names, scores, and medals (e.g., John Doe 95 gold, Jane Smith 88 silver):</label>
+            <input type="text" id="data" placeholder="John Doe 95 gold, Jane Smith 88 silver, ...">
         </div>
-        
-        <!-- Server 2 -->
-        <div class="server-card">
-            <div>
-                <h2>Server 2</h2>
-                <p>Status: Offline</p>
-            </div>
-            <a href="/server2/manage" class="button">Manage Server</a>
-        </div>
-        
-        <!-- Server 3 -->
-        <div class="server-card">
-            <div>
-                <h2>Server 3</h2>
-                <p>Status: Online</p>
-            </div>
-            <a href="/server3/manage" class="button">Manage Server</a>
-        </div>
-        
-        <!-- Server 4 -->
-        <div class="server-card">
-            <div>
-                <h2>Server 4</h2>
-                <p>Status: Maintenance</p>
-            </div>
-            <a href="/server4/manage" class="button">Manage Server</a>
-        </div>
-        
+        <button onclick="processData()">Submit</button>
+        <table id="result" style="display:none;">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Score</th>
+                    <th>Medal</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
+
+    <script>
+        function processData() {
+            const input = document.getElementById('data').value;
+            const resultTable = document.getElementById('result');
+            const tbody = resultTable.querySelector('tbody');
+            const entries = input.split(',').map(entry => entry.trim());
+            const data = [];
+
+            entries.forEach(entry => {
+                const parts = entry.split(' ');
+                const name = parts.slice(0, -2).join(' ');
+                const score = parseInt(parts[parts.length - 2]);
+                const medal = parts[parts.length - 1];
+                data.push({ name, score, medal });
+            });
+
+            // Sort by score in descending order
+            data.sort((a, b) => b.score - a.score);
+
+            // Build the result HTML
+            let resultHTML = '';
+            data.forEach((item, index) => {
+                let medalClass = '';
+                switch(item.medal) {
+                    case 'gold':
+                        medalClass = 'gold';
+                        break;
+                    case 'silver':
+                        medalClass = 'silver';
+                        break;
+                    case 'bronze':
+                        medalClass = 'bronze';
+                        break;
+                    case 'honorable':
+                        medalClass = 'honorable';
+                        break;
+                }
+                resultHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item.name}</td>
+                        <td>${item.score}</td>
+                        <td class="${medalClass}">${item.medal.charAt(0).toUpperCase() + item.medal.slice(1)}</td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = resultHTML;
+            resultTable.style.display = 'table';
+        }
+    </script>
 </body>
 </html>
