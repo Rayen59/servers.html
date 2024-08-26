@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Management Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            background: url('settings-icon.png') no-repeat center center fixed;
+            background-size: 15%;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8); /* semi-transparent background */
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .server-card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ddd;
+        }
+        .server-card h2 {
+            margin: 0;
+            color: #007bff;
+            font-size: 1.5em;
+        }
+        .server-card p {
+            margin: 0;
+            color: #555;
+        }
+        .server-card a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .server-card a:hover {
+            background-color: #0056b3;
+        }
+        .button {
+            display: inline-block;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Server Management Dashboard</h1>
+        
+        <!-- Server 1 -->
+        <div class="server-card">
+            <div>
+                <h2>Server 1(send emails)</h2>
+                <p>Status: Online</p>
+            </div>
+            <a href="/server1/manage" class="button">Manage Server</a>
+        </div>
+        
+        <!-- Server 2 -->
+        <div class="server-card">
+            <div>
+                <h2>Server 2(results)</h2>
+                <p>Status: Offline</p>
+            </div>
+            <a href="/server2/manage" class="button">Manage Server</a>
+        </div>
+        
+        <!-- Server 3 -->
+        <div class="server-card">
+            <div>
+                <h2>Server 3</h2>
+                <p>Status: Online</p>
+            </div>
+            <a href="/server3/manage" class="button">Manage Server</a>
+        </div>
+        
+        <!-- Server 4 -->
+        <div class="server-card">
+            <div>
+                <h2>Server 4</h2>
+                <p>Status: Maintenance</p>
+            </div>
+            <a href="/server4/manage" class="button">Manage Server</a>
+        </div>
+        
+    </div>
+</body>
+</html>
