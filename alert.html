@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Alert</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Send Account Alert</h1>
+        <form id="alertForm" onsubmit="sendAlert(); return false;">
+            <div class="form-group">
+                <label for="email">Enter Email Address:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Send Alert</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function sendAlert() {
+            var email = document.getElementById('email').value;
+            var subject = 'Account Alert';
+            var body = 'Dear User,\n\nWe have detected unusual behavior associated with your account. Please be advised that multiple account logins or suspicious activities have been noted. If such behavior persists, your account may be blocked in the future.\n\nSincerely,\nThe Support Team';
+
+            var mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+        }
+    </script>
+</body>
+</html>
